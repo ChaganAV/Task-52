@@ -1,10 +1,10 @@
 ﻿// Создадим массив через random
 Random rnd = new Random();
-int rows = rnd.Next(2,10);
-int columns = rnd.Next(2,10);
-int[,] numbers = new int[rows,columns];
-int[] sumTotalColumn = new int[columns];
-double[] averColumn = new double[columns];
+int rows = rnd.Next(2,10); int columns = rnd.Next(2,10); // строки и колонки массива 
+int[,] numbers = new int[rows,columns]; // массив
+int[] sumTotalColumn = new int[columns]; // итоги
+int[] averColumn = new int[columns]; // среднее по колонкам
+int min = 1; int max = 10; // для random
 
 FillArrayNull(sumTotalColumn); // заполним итоги нулями
 FillRandomArray(numbers); // заполним массив
@@ -15,21 +15,21 @@ AverageColumns(numbers, sumTotalColumn, averColumn);
 Console.WriteLine("==== Итоги ====");
 PrintArray(sumTotalColumn);
 Console.WriteLine("=== среднее ===");
-PrintDoubleArray(averColumn);
+PrintArray(averColumn);
 
 
 
 
 // Функции
-void AverageColumns(int[,] array, int[] sumCol, double[] averCol)
+void AverageColumns(int[,] array, int[] sumCol, int[] averCol)
 {
-    for(int i = 0; i < array.GetLength(0); i++)
+    for(int col = 0; col < array.GetLength(1); col++)
     {
-        for(int j = 0; j < array.GetLength(1); j++)
+        for(int row = 0; row < array.GetLength(0); row++)
         {
-            sumCol[j]+= array[i,j];
+            sumCol[col]+= array[row,col];
         }
-        //averCol[i] = sumCol[i]/array.GetLength(1);
+        averCol[col] = sumCol[col]/array.GetLength(0); // среднее = сумма/количество
     }
 }
 
@@ -42,11 +42,11 @@ void FillArrayNull(int[] array)
 void FillRandomArray(int[,] array)
 {
     Random rnd = new Random();
-    for(int i = 0; i < array.GetLength(0); i++)
+    for(int row = 0; row < array.GetLength(0); row++)
     {
-        for(int j = 0; j < array.GetLength(1); j++)
+        for(int col = 0; col < array.GetLength(1); col++)
         {
-            array[i,j] = rnd.Next(0,10);
+            array[row,col] = rnd.Next(min,max);
         }
     }
 }
@@ -63,14 +63,6 @@ void Print2DArray(int[,] array)
     }
 }
 void PrintArray(int[] array)
-{
-    for(int i = 0; i < array.Length; i++)
-    {
-        Console.Write($"{array[i]} ");
-    }
-    Console.WriteLine();
-}
-void PrintDoubleArray(double[] array)
 {
     for(int i = 0; i < array.Length; i++)
     {
